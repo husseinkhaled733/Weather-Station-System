@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Data-Acquisition.iml" filepath="$PROJECT_DIR$/Data-Acquisition.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Weather-Station-System.iml" filepath="$PROJECT_DIR$/.idea/Weather-Station-System.iml" />
     </modules>
   </component>
