@@ -1,1 +1,7 @@
 weather_data/
+*.class
+*.class
+Data-Acquisition/target/classes/org/example/WeatherStationMock.class
+Data-Acquisition/target/classes/org/example/WeatherStationMock.class
+.idea/compiler.xml
+.idea/uiDesigner.xml

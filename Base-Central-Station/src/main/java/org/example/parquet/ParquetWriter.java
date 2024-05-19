@@ -69,7 +69,7 @@ public class ParquetWriter {
 
             df.write()
                     .mode("append")
-                    .partitionBy("timestamp>", "station_id").parquet("../weather_data");
+                    .partitionBy("timestamp>", "station_id").parquet("Base-Central-Station/weather_data");
         }
     }
 

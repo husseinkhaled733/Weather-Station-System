@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class Utils {
 
-    public static final String propertiesPath = "src/main/resources/application.properties";
+    public static final String propertiesPath = "Base-Central-Station/src/main/resources/application.properties";
     public static final String TOPIC = "weather_data";
     public static final ObjectMapper objectMapper = new ObjectMapper();
 

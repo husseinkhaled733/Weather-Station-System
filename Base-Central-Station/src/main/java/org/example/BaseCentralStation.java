@@ -1,9 +1,7 @@
 package org.example;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.example.dto.Message;
 import org.example.parquet.ParquetWriter;
 
 import java.io.IOException;
@@ -11,7 +9,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
-public class Main {
+public class BaseCentralStation {
     public static void main(String[] args) throws IOException {
 
 
