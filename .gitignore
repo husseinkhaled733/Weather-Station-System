@@ -1,7 +1,28 @@
 weather_data/
-*.class
-*.class
-Data-Acquisition/target/classes/org/example/WeatherStationMock.class
-Data-Acquisition/target/classes/org/example/WeatherStationMock.class
+
+# local env files
+.env*.local
+
+
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/.mvn/**
+!**/mvn/**
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+*.jar
+
+Base-Central-Station/mvnw
+Base-Central-Station/.idea
+Base-Central-Station/.mvn
+Base-Central-Station/dependency-reduced-pom.xml
+Base-Central-Station/mvnw.cmd
+
 .idea/compiler.xml
-.idea/uiDesigner.xml

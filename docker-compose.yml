@@ -31,6 +31,16 @@ services:
     networks:
       - kafka-network
 
+  base-cental-station:
+    build: Base-Central-Station/
+    networks:
+      - kafka-network
+    volumes:
+      - parquet-volume:/app
+
+volumes:
+  parquet-volume:
+
 networks:
   kafka-network:
     driver: bridge
