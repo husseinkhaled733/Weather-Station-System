@@ -32,7 +32,7 @@ public class Options {
     private int maxSegmentSize = 256 * 1024;
 
     @Builder.Default
-    private int maxFilesToCompact = 10;
+    private int maxFilesToCompact = 1000;
 
     @Builder.Default
     private String baseDir = System.getProperty("user.dir") + "/src/main/resources/";
