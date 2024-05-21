@@ -18,7 +18,8 @@ public class ParquetElasticSearchConnector {
                 .master("local[*]")
                 .config("spark.es.index.auto.create", "true")
                 .config("spark.sql.streaming.checkpointLocation", "/checkpoint/")
-                .config("spark.es.nodes","elasticsearch")
+                .config("spark.hadoop.fs.defaultFS", "file:///")
+                .config("spark.es.nodes","es01-test")
                 .config("spark.es.port","9200")
                 .config("spark.es.nodes.wan.only","true")
                 .getOrCreate();
@@ -45,14 +46,13 @@ public class ParquetElasticSearchConnector {
                 .schema(schema)
                 .load("/app/weather_data");
 
-
         // writing data stream to elasticsearch
         streamData.writeStream()
                 .outputMode("append")
                 .format("org.elasticsearch.spark.sql")
-                .option("es.nodes","elasticsearch")
+                .option("es.nodes","es01-test")
                 .option("es.port", "9200")
-                .option("checkpointLocation", "/app/checkpoint/")
+                .option("checkpointLocation", "/")
                 .start("weather_data/").awaitTermination();
     }
 }
