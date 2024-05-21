@@ -38,6 +38,7 @@ services:
       - kafka-network
     volumes:
       - parquet-volume:/app/weather_data
+      - bitcask-volume:/app/bitcask_store
 
   parquet-elasticsearch-connector:
     build: connectorr/
@@ -61,7 +62,10 @@ services:
       - "ES_JAVA_OPTS=-Xms4g -Xmx10g"
       - "ES_PORT=9200"
       - "ES_JAVA_HOME=/usr/share/elasticsearch/jdk"
-    mem_limit: 4g
+    deploy:
+      resources:
+        limits:
+          memory: 10G
     networks:
       - elastic-network
 #
@@ -80,6 +84,7 @@ services:
 
 volumes:
   parquet-volume:
+  bitcask-volume:
 
 networks:
   kafka-network:

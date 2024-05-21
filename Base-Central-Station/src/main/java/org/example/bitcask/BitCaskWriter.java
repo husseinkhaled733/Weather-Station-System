@@ -5,6 +5,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.example.BitCask;
 import org.example.Utils;
 import org.example.dto.Message;
+import org.example.models.Options;
 import org.example.parquet.ParquetWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,9 @@ public class BitCaskWriter {
     private final Logger log = LoggerFactory.getLogger(ParquetWriter.class);
 
     public BitCaskWriter() {
-        this.bitCask = new BitCask<>();
+        this.bitCask = new BitCask<>(Options.builder()
+                .baseDir("/app/bitcask_store/")
+                .build());
     }
 
     public void writeRecords(ConsumerRecords<String, String> messages) {
