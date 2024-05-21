@@ -65,7 +65,12 @@ services:
       - "ES_JAVA_OPTS=-Xms4g -Xmx10g"
       - "ES_PORT=9200"
       - "ES_JAVA_HOME=/usr/share/elasticsearch/jdk"
-    mem_limit: 8g
+
+    deploy:
+      resources:
+        limits:
+          memory: 10G
+
     networks:
       - elastic-network
 #

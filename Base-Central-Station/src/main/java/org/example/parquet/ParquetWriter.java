@@ -68,7 +68,7 @@ public class ParquetWriter {
 
             df.write()
                     .mode("append")
-                    .partitionBy("timestamp>", "station_id").parquet("/app/");
+                    .partitionBy("timestamp>", "station_id").parquet("/app/weather/");
         }
     }
 

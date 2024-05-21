@@ -25,7 +25,7 @@ schema = StructType([
 stream_data = spark.readStream \
     .format("parquet") \
     .schema(schema) \
-    .load("/app/")
+    .load("/app/weather/")
 
 # Initialize Elasticsearch client
 es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
