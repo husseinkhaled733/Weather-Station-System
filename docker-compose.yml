@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 
 services:
   zookeeper:
@@ -40,7 +40,7 @@ services:
       - parquet-volume:/app/weather_data
 
   parquet-elasticsearch-connector:
-    build: Parquet-Elasticsearch-Connector/
+    build: connectorr/
     networks:
       - elastic-network
     volumes:
@@ -52,18 +52,19 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+
     environment:
       - "discovery.type=single-node"
       - "xpack.security.enabled=false"
       - "xpack.security.enrollment.enabled=false"
 #      - "bootstrap.memory_lock=true"
-      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+      - "ES_JAVA_OPTS=-Xms4g -Xmx10g"
       - "ES_PORT=9200"
-
-
+      - "ES_JAVA_HOME=/usr/share/elasticsearch/jdk"
+    mem_limit: 4g
     networks:
       - elastic-network
-    mem_limit: 4g
+#
 
   kibana:
     build: kibana
