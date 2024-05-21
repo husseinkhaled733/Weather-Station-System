@@ -1,0 +1,327 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  labels:
+    app: zookeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+        - name: zookeeper
+          image: bitnami/zookeeper:latest
+          env:
+            - name: ALLOW_ANONYMOUS_LOGIN
+              value: "yes"
+          ports:
+            - containerPort: 2181
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+spec:
+  ports:
+    - port: 2181
+  selector:
+    app: zookeeper
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-server
+  labels:
+    app: kafka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-server
+  template:
+    metadata:
+      labels:
+        app: kafka-server
+    spec:
+      containers:
+        - name: kafka-server
+          image: bitnami/kafka:latest
+          env:
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: "zookeeper:2181"
+            - name: KAFKA_CFG_LISTENERS
+              value: "PLAINTEXT://:9092,EXTERNAL://:9094"
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://kafka-service:9092,EXTERNAL://localhost:9094"
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+            - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
+              value: "PLAINTEXT"
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+            - name: KAFKA_CFG_DELETE_TOPIC_ENABLE
+              value: "true"
+          ports:
+            - containerPort: 9092
+            - containerPort: 9094
+            - containerPort: 9093
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-service
+spec:
+  selector:
+    app: kafka-server
+  ports:
+    - name: kafka
+      protocol: TCP
+      port: 9092
+      targetPort: 9092
+    - name: external
+      protocol: TCP
+      port: 9094
+      targetPort: 9094
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "1"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "1"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "1"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "2"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "2"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "2"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "3"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "3"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "3"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "4"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "4"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "4"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "5"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "5"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "5"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "6"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "6"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "6"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-7
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "7"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "7"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "7"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-8
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "8"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "8"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "8"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-9
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "9"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "9"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "9"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-station-10
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-station
+      station-id: "10"
+  template:
+    metadata:
+      labels:
+        app: weather-station
+        station-id: "10"
+    spec:
+      containers:
+        - name: weather-station-mock
+          image: husseinkhaled733/weather-station-mock
+          env:
+            - name: STATION_ID
+              value: "10"
+
