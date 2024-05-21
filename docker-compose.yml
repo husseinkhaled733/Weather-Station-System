@@ -37,36 +37,39 @@ services:
     networks:
       - kafka-network
     volumes:
-     - parquet-volume:/app/weather_data
+     - parquet-volume:/app/
 
   parquet-elasticsearch-connector:
     build: connectorr/
     networks:
       - elastic-network
     volumes:
-      - parquet-volume:/app/weather_data
+      - parquet-volume:/app/
+    depends_on:
+      - elasticsearch
+
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.3
+#    build: elastic-search
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+      - "xpack.security.enrollment.enabled=false"
+#      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms4g -Xmx10g"
+      - "ES_PORT=9200"
+      - "ES_JAVA_HOME=/usr/share/elasticsearch/jdk"
+    mem_limit: 8g
+    networks:
+      - elastic-network
 #
-#  elasticsearch:
-#    container_name: elasticsearch
-#    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.3
-##    build: elastic-search
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-#
-#    environment:
-#      - "discovery.type=single-node"
-#      - "xpack.security.enabled=false"
-#      - "xpack.security.enrollment.enabled=false"
-##      - "bootstrap.memory_lock=true"
-#      - "ES_JAVA_OPTS=-Xms4g -Xmx10g"
-#      - "ES_PORT=9200"
-#      - "ES_JAVA_HOME=/usr/share/elasticsearch/jdk"
-#    mem_limit: 8g
-#    networks:
-#      - elastic-network
-##
-#
+
 #  kibana:
 #    build: kibana
 #    ports:
