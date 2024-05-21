@@ -35,7 +35,6 @@ public class ParquetWriter {
                 .appName("main")
                 .master("local[*]")
                 .config("parquet.enable.summary-metadata", "false")
-                .config("dfs.client.read.shortcircuit.skip.checksum", "true")
                 .getOrCreate();
 
         // initialize parquet schema
@@ -69,7 +68,7 @@ public class ParquetWriter {
 
             df.write()
                     .mode("append")
-                    .partitionBy("timestamp>", "station_id").parquet("Base-Central-Station/weather_data");
+                    .partitionBy("timestamp>", "station_id").parquet("/app/");
         }
     }
 

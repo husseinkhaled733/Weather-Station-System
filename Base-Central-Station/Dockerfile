@@ -1,5 +1,7 @@
 FROM spark:3.5.0-java17
 
+WORKDIR /app
+
 COPY target/*.jar .
 
 COPY src/main/resources/application.properties .
