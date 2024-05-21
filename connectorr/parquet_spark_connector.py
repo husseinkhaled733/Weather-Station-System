@@ -28,7 +28,7 @@ stream_data = spark.readStream \
     .load("/app/weather_data")
 
 # Initialize Elasticsearch client
-es = Elasticsearch([{'host': 'es01-test', 'port': 9200, 'scheme': 'http'}])
+es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
 
 
 def write_to_es(batch_df, batch_id):
