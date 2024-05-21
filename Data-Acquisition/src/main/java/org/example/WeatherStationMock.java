@@ -21,7 +21,7 @@ public class WeatherStationMock {
         properties.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
-            long stationId = 2;
+            long stationId = 1;
             long serialNumber = 1;
 
             while (true) {
