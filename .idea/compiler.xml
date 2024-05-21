@@ -6,8 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Data-Acquisition" />
+        <module name="RainDetector" />
+        <module name="WeatherStationMock" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Data-Acquisition" target="17" />
+      <module name="WeatherStation" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

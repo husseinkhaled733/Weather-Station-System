@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class WeatherStationMock {
     private static final Random random = new Random();
-    private static final String KAFKA_HOST = "localhost:9094";
+    private static final String KAFKA_HOST = "kafka-service:9092";
     private static final int LOW_BATTERY_PERCENTAGE = 30;
     private static final int MEDIUM_BATTERY_PERCENTAGE = 40;
     private static final int HIGH_BATTERY_PERCENTAGE = 30;
@@ -15,15 +15,16 @@ public class WeatherStationMock {
     private static final String KAFKA_TOPIC = "weather_data";
 
     public static void main(String[] args) {
+        long stationId = Long.parseLong(System.getenv("STATION_ID"));
+        System.out.println("Station ID: " + stationId);
+        long serialNumber = 1;
+
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers", KAFKA_HOST);
         properties.setProperty("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
-            long stationId = 1;
-            long serialNumber = 1;
-
             while (true) {
                 if (!shouldDropMessage()) {
                     String batteryStatus = generateBatteryStatus();
