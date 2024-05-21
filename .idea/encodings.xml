@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/Base-Central-Station/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Base-Central-Station/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BitCask/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BitCask/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Data-Acquisition/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Data-Acquisition/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Parquet-Elasticsearch-Connector/src/main/java" charset="UTF-8" />

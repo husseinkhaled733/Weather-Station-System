@@ -50,7 +50,7 @@ public class ParquetElasticSearchConnector {
         streamData.writeStream()
                 .outputMode("append")
                 .format("org.elasticsearch.spark.sql")
-                .option("es.nodes","es01-test")
+                .option("es.nodes","elasticsearch")
                 .option("es.port", "9200")
                 .option("checkpointLocation", "/")
                 .start("weather_data/").awaitTermination();

@@ -38,6 +38,7 @@ services:
       - kafka-network
     volumes:
       - parquet-volume:/app/
+      - bitcask-volume:/app/bitcask_store
 
   parquet-elasticsearch-connector:
     build: connectorr/
@@ -51,7 +52,6 @@ services:
 
   elasticsearch:
     container_name: elasticsearch
-#    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.3
     build: elastic-search
     ports:
       - "9200:9200"
@@ -61,7 +61,7 @@ services:
       - "discovery.type=single-node"
       - "xpack.security.enabled=false"
       - "xpack.security.enrollment.enabled=false"
-      #      - "bootstrap.memory_lock=true"
+#      - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms4g -Xmx10g"
       - "ES_PORT=9200"
       - "ES_JAVA_HOME=/usr/share/elasticsearch/jdk"
@@ -73,7 +73,7 @@ services:
 
     networks:
       - elastic-network
-
+#
 
   kibana:
     build: kibana
@@ -89,6 +89,7 @@ services:
 
 volumes:
   parquet-volume:
+  bitcask-volume:
 
 networks:
   kafka-network:
