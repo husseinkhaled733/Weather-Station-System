@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-connector-service
+spec:
+  selector:
+    app: elasticsearch-connector
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200

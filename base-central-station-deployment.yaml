@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: base-central-station
+  labels:
+    app:  base-central-station
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: base-central-station
+  template:
+    metadata:
+      name: base-central-station
+      labels:
+        app: base-central-station
+    spec:
+      containers:
+        - name:  base-central-station
+          image: Image
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: parquet-volume
+              mountPath: /app/
+            - name: bitcask-volume
+              mountPath: /app/bitcask_store
+      restartPolicy: Always
+      volumes:
+        - name: parquet-volume
+          persistentVolumeClaim:
+            claimName: parquet-volume
+        - name: bitcask-volume
+          persistentVolumeClaim:
+            claimName: bitcask-volume
+      
