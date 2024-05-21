@@ -69,18 +69,6 @@
     </dependencies>
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-jar-plugin</artifactId>-->
-<!--                <version>3.2.0</version>-->
-<!--                <configuration>-->
-<!--                    <archive>-->
-<!--                        <manifest>-->
-<!--                            <mainClass>org.example.BaseCentralStation</mainClass>-->
-<!--                        </manifest>-->
-<!--                    </archive>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -102,13 +90,10 @@
                                     </excludes>
                                 </filter>
                             </filters>
-                            <!-- Additional configuration if needed -->
                             <transformers>
-                                <!-- Add a transformer to include a custom manifest file -->
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
                                         <Main-Class>org.example.BaseCentralStation</Main-Class>
-                                        <!-- Add custom manifest entries as needed -->
                                     </manifestEntries>
                                 </transformer>
                             </transformers>

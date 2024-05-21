@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   zookeeper:
     image: bitnami/zookeeper:latest
@@ -36,11 +37,51 @@ services:
     networks:
       - kafka-network
     volumes:
-      - parquet-volume:/app
+      - parquet-volume:/app/weather_data
+
+  parquet-elasticsearch-connector:
+    build: Parquet-Elasticsearch-Connector/
+    networks:
+      - elastic-network
+    volumes:
+      - parquet-volume:/app/weather_data
+
+  elasticsearch:
+    container_name: elasticsearch
+    build: elastic-search
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+      - "xpack.security.enrollment.enabled=false"
+#      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+      - "ES_PORT=9200"
+
+
+    networks:
+      - elastic-network
+    mem_limit: 4g
+
+  kibana:
+    build: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
+      - "XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=wJ$7mQ^E5#6@8zL!x0*rYpUvD4&9%2Qt"
+    networks:
+      - elastic-network
+    depends_on:
+      - elasticsearch
 
 volumes:
   parquet-volume:
 
 networks:
   kafka-network:
+    driver: bridge
+  elastic-network:
     driver: bridge
