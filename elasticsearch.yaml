@@ -24,7 +24,6 @@ spec:
           volumeMounts:
             - name: parquet-volume
               mountPath: /app/
-          imagePullPolicy: IfNotPresent
           env:
             - name: discovery.type
               value: "single-node"
@@ -32,8 +31,6 @@ spec:
               value: "false"
             - name: xpack.security.enrollment.enabled
               value: "false"
-            # - name: bootstrap.memory_lock
-            #   value: "true"
             - name: ES_JAVA_OPTS
               value: "-Xms4g -Xmx10g"
             - name: ES_PORT
@@ -41,21 +38,67 @@ spec:
             - name: ES_JAVA_HOME
               value: "/usr/share/elasticsearch/jdk"
           resources:
-              limits:
-                memory: "5Gi"
+            limits:
+              memory: "5Gi"
         - name: parquet-elasticsearch-connector
-          image: mariamelsamni/weather-system-parquet-elasticsearch-connector
+          image: mariamelsamni/weather-system-parquet-elasticsearch-connector:v1.1
           volumeMounts:
             - name: parquet-volume
-              mountPath: /app/
+              mountPath: /app/weather
       volumes:
-      - name: parquet-volume
-        persistentVolumeClaim:
-          claimName: parquet-volume
+        - name: parquet-volume
+          persistentVolumeClaim:
+            claimName: pvc-parquet
+
 
 
 ---
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana-deployment
+  labels:
+    app: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      name: kibana
+      labels:
+        app: kibana
+    spec:
+      containers:
+        - name: kibana
+          image: docker.elastic.co/kibana/kibana:8.13.3
+          ports:
+            - containerPort: 5601
+          env:
+            - name: ELASTICSEARCH_URL
+              value: "http://elasticsearch-service:9200"
+          resources:
+            limits:
+              memory: "1Gi"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-service
+spec:
+  selector:
+    app: kibana
+  ports:
+    - protocol: TCP
+      port: 5601
+      targetPort: 5601
+
+
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -67,5 +110,3 @@ spec:
     - protocol: TCP
       port: 9200
       targetPort: 9200
-
-      

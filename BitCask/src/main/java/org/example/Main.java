@@ -178,7 +178,7 @@ public class Main {
             bitCask.put(1, "anwar");
         }).start();
         new Thread(() -> {
-            bitCask.put(2, "mariem");
+            bitCask.put(2, "mariam");
         }).start();
         new Thread(() -> {
             bitCask.put(3, "hussien");

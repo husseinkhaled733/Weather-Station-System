@@ -16,13 +16,14 @@ spec:
         app: base-central-station
     spec:
       containers:
-        - name:  mariamelsamni/weather-system-base-central-station:v1
+        - name:  base-central-station
+          image: mariamelsamni/weather-system-base-central-station:v1.1
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: parquet-volume
-              mountPath: /app/
+              mountPath: /app/weather/
             - name: bitcask-volume
-              mountPath: /app/bitcask_store
+              mountPath: /app/bitcask_store/
       restartPolicy: Always
       volumes:
         - name: parquet-volume
@@ -31,35 +32,6 @@ spec:
         - name: bitcask-volume
           persistentVolumeClaim:
             claimName: pvc-bitcask
-
----
-
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-    name: pv-parquet
-spec:
-  capacity:
-    storage: 2Gi
-  accessModes:
-      - ReadWriteMany
-  claimRef:
-    name: pvc-parquet
-
----
-
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: pv-bitcask
-spec:
-  capacity:
-    storage: 2Gi
-  accessModes:
-    - ReadWriteOnce
-  claimRef:
-    name: pvc-bitcask
-
 
 ---
 
