@@ -27,3 +27,7 @@ Base-Central-Station/mvnw.cmd
 
 .idea/compiler.xml
 .idea/compiler.xml
+*.lst
+tryy.yaml
+Data_Acquisition/WeatherStationMock/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+*.lst
