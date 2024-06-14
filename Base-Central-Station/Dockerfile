@@ -1,4 +1,4 @@
-FROM spark:3.5.0-java17
+FROM openjdk:17
 
 WORKDIR /app
 

@@ -1,5 +1,20 @@
-FROM spark:3.5.1-scala2.12-java11-ubuntu
+FROM openjdk:11
 
-COPY target/*.jar .
+# Install Python
+RUN apt-get update \
+    && apt-get install -y python3 python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["java", "-jar", "Parquet-Elasticsearch-Connector-1.0-SNAPSHOT-jar-with-dependencies.jar"]
+# Install Python packages
+RUN pip install elasticsearch==8.1.3 pyspark
+
+# Verify installations
+RUN java -version
+RUN python3 --version
+
+COPY index_mapping.json .
+COPY parquet_spark_connector.py .
+
+ENTRYPOINT ["python3"]
+
+CMD ["parquet_spark_connector.py"]

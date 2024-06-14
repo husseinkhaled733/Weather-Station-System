@@ -32,8 +32,8 @@ services:
     networks:
       - kafka-network
 
-  base-cental-station:
-    build: Base-Central-Station/
+  base-central-station:
+    image: mariamelsamni/weather-system-base-central-station:v1
     networks:
       - kafka-network
     volumes:
@@ -41,7 +41,7 @@ services:
       - bitcask-volume:/app/bitcask_store
 
   parquet-elasticsearch-connector:
-    build: connectorr/
+    build: Parquet-Elasticsearch-Connector/
     networks:
       - elastic-network
     volumes:
@@ -52,7 +52,7 @@ services:
 
   elasticsearch:
     container_name: elasticsearch
-    build: elastic-search
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.3
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -69,23 +69,23 @@ services:
     deploy:
       resources:
         limits:
-          memory: 10G
+          memory: 5G
 
     networks:
       - elastic-network
+##
 #
-
-  kibana:
-    build: kibana
-    ports:
-      - "5601:5601"
-    environment:
-      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
-      - "XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    networks:
-      - elastic-network
-    depends_on:
-      - elasticsearch
+#  kibana:
+#    build: kibana
+#    ports:
+#      - "5601:5601"
+#    environment:
+#      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
+#      - "XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+#    networks:
+#      - elastic-network
+#    depends_on:
+#      - elasticsearch
 
 volumes:
   parquet-volume:

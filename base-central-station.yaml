@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: base-central-station
+  labels:
+    app: base-central-station
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: base-central-station
+  template:
+    metadata:
+      name: base-central-station
+      labels:
+        app: base-central-station
+    spec:
+      containers:
+        - name:  mariamelsamni/weather-system-base-central-station:v1
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: parquet-volume
+              mountPath: /app/
+            - name: bitcask-volume
+              mountPath: /app/bitcask_store
+      restartPolicy: Always
+      volumes:
+        - name: parquet-volume
+          persistentVolumeClaim:
+            claimName: pvc-parquet
+        - name: bitcask-volume
+          persistentVolumeClaim:
+            claimName: pvc-bitcask
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+    name: pv-parquet
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+      - ReadWriteMany
+  claimRef:
+    name: pvc-parquet
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-bitcask
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    name: pvc-bitcask
+
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-parquet
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-bitcask
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

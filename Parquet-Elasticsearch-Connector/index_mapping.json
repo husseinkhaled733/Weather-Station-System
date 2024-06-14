@@ -1,0 +1,34 @@
+{
+  "mappings": {
+    "properties": {
+      "battery_status": {
+        "type": "keyword"
+      },
+      "s_no": {
+        "type": "long"
+      },
+      "station_id": {
+        "type": "long"
+      },
+      "status_timestamp": {
+        "enabled": false
+      },
+      "timestamp": {
+        "enabled": false
+      },
+      "weather": {
+        "properties": {
+          "humidity": {
+            "enabled": false
+          },
+          "temperature": {
+            "enabled": false
+          },
+          "wind_speed": {
+            "enabled": false
+          }
+        }
+      }
+    }
+  }
+}
