@@ -92,239 +92,29 @@ spec:
       protocol: TCP
       port: 9094
       targetPort: 9094
-
+      
 ---
-
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: weather-station-1
+  name: weather-station
 spec:
-  replicas: 1
+  serviceName: "weather-station"
+  replicas: 10
   selector:
     matchLabels:
       app: weather-station
-      station-id: "1"
   template:
     metadata:
       labels:
         app: weather-station
-        station-id: "1"
     spec:
       containers:
         - name: weather-station-mock
           image: mariamelsamni/weather-system-mock-data-acquisition:v1.1
           env:
             - name: STATION_ID
-              value: "1"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['apps.kubernetes.io/pod-index']
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: weather-station-2
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: weather-station
-      station-id: "2"
-  template:
-    metadata:
-      labels:
-        app: weather-station
-        station-id: "2"
-    spec:
-      containers:
-        - name: weather-station-mock
-          image: mariamelsamni/weather-system-mock-data-acquisition:v1.1
-          env:
-            - name: STATION_ID
-              value: "2"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: weather-station-3
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: weather-station
-      station-id: "3"
-  template:
-
-    metadata:
-      labels:
-        app: weather-station
-        station-id: "3"
-    spec:
-      containers:
-
-        - name: weather-station-mock
-          image: mariamelsamni/weather-system-mock-data-acquisition:v1.1
-          env:
-            - name: STATION_ID
-              value: "3"
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: weather-station-4
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: weather-station
-      station-id: "4"
-  template:
-    metadata:
-      labels:
-        app: weather-station
-        station-id: "4"
-    spec:
-      containers:
-        - name: weather-station-mock
-          image: mariamelsamni/weather-system-mock-data-acquisition:v1.1
-          env:
-            - name: STATION_ID
-              value: "4"
----
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: weather-station-5
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: weather-station
-#      station-id: "5"
-#  template:
-#    metadata:
-#      labels:
-#        app: weather-station
-#        station-id: "5"
-#    spec:
-#      containers:
-#        - name: weather-station-mock
-#          image: husseinkhaled733/weather-station-mock
-#          env:
-#            - name: STATION_ID
-#              value: "5"
-#---
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: weather-station-6
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: weather-station
-#      station-id: "6"
-#  template:
-#    metadata:
-#      labels:
-#        app: weather-station
-#        station-id: "6"
-#    spec:
-#      containers:
-#        - name: weather-station-mock
-#          image: husseinkhaled733/weather-station-mock
-#          env:
-#            - name: STATION_ID
-#              value: "6"
-#---
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: weather-station-7
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: weather-station
-#      station-id: "7"
-#  template:
-#    metadata:
-#      labels:
-#        app: weather-station
-#        station-id: "7"
-#    spec:
-#      containers:
-#        - name: weather-station-mock
-#          image: husseinkhaled733/weather-station-mock
-#          env:
-#            - name: STATION_ID
-#              value: "7"
-#---
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: weather-station-8
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: weather-station
-#      station-id: "8"
-#  template:
-#    metadata:
-#      labels:
-#        app: weather-station
-#        station-id: "8"
-#    spec:
-#      containers:
-#        - name: weather-station-mock
-#          image: husseinkhaled733/weather-station-mock
-#          env:
-#            - name: STATION_ID
-#              value: "8"
-#---
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: weather-station-9
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: weather-station
-#      station-id: "9"
-#  template:
-#    metadata:
-#      labels:
-#        app: weather-station
-#        station-id: "9"
-#    spec:
-#      containers:
-#        - name: weather-station-mock
-#          image: husseinkhaled733/weather-station-mock
-#          env:
-#            - name: STATION_ID
-#              value: "9"
-#---
-#apiVersion: apps/v1
-#kind: Deployment
-#metadata:
-#  name: weather-station-10
-#spec:
-#  replicas: 1
-#  selector:
-#    matchLabels:
-#      app: weather-station
-#      station-id: "10"
-#  template:
-#    metadata:
-#      labels:
-#        app: weather-station
-#        station-id: "10"
-#    spec:
-#      containers:
-#        - name: weather-station-mock
-#          image: husseinkhaled733/weather-station-mock
-#          env:
-#            - name: STATION_ID
-#              value: "10"
-#
